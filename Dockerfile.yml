@@ -1,11 +1,9 @@
-
-FROM nginx:1.24-alpine3.17-slim
-
-# Copy everything in the current working directory to the default nginx folder
-COPY . /usr/share/nginx/html
-
-# Expose port 80 for HTTP traffic
+FROM ubuntu
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install apache2 -y
+RUN apt-get install apache2-utils -y
+RUN apt-get clean
 EXPOSE 80
-
-# Add a volume to persist data
-VOLUME /usr/share/nginx/html
+RUN echo "Hello From Server" > /var/www/html/index.html
+CMD ["apache2ctl","-D","FOREGROUND"]
